@@ -284,6 +284,21 @@ class modInvoiceGenerator extends DolibarrModules
 		$this->rights[$r][4] = 'invoicegeneratortemplate';
 		$this->rights[$r][5] = 'delete';
 		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 0 + 1);
+		$this->rights[$r][1] = 'Read HistoryOfInvoicesGenerated object of InvoiceGenerator';
+		$this->rights[$r][4] = 'historyofinvoicesgenerated';
+		$this->rights[$r][5] = 'read';
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 1 + 1);
+		$this->rights[$r][1] = 'Create/Update HistoryOfInvoicesGenerated object of InvoiceGenerator';
+		$this->rights[$r][4] = 'historyofinvoicesgenerated';
+		$this->rights[$r][5] = 'write';
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 2 + 1);
+		$this->rights[$r][1] = 'Delete HistoryOfInvoicesGenerated object of InvoiceGenerator';
+		$this->rights[$r][4] = 'historyofinvoicesgenerated';
+		$this->rights[$r][5] = 'delete';
+		$r++;
 		
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -398,6 +413,52 @@ class modInvoiceGenerator extends DolibarrModules
         );
 
 		/*END LEFTMENU INVOICEGENERATORTEMPLATE*/
+		/*LEFTMENU HISTORYOFINVOICESGENERATED*/
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=invoicegenerator',
+			'type'=>'left',
+			'titre'=>'HistoryOfInvoicesGenerated',
+			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+			'mainmenu'=>'invoicegenerator',
+			'leftmenu'=>'historyofinvoicesgenerated',
+			'url'=>'/invoicegenerator/historyofinvoicesgenerated_list.php',
+			'langs'=>'invoicegenerator@invoicegenerator',
+			'position'=>1000+$r,
+			'enabled'=>'$conf->testmodule->enabled',
+			'perms'=>'1',
+			'target'=>'',
+			'user'=>2,
+		);
+        $this->menu[$r++]=array(
+            'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=historyofinvoicesgenerated',
+            'type'=>'left',
+            'titre'=>'List HistoryOfInvoicesGenerated',
+            'mainmenu'=>'invoicegenerator',
+            'leftmenu'=>'invoicegenerator_historyofinvoicesgenerated_list',
+            'url'=>'/invoicegenerator/historyofinvoicesgenerated_list.php',
+            'langs'=>'invoicegenerator@invoicegenerator',
+            'position'=>1000+$r,
+            'enabled'=>'$conf->invoicegenerator->enabled',
+            'perms'=>'1',
+            'target'=>'',
+            'user'=>2,
+        );
+        $this->menu[$r++]=array(
+            'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=historyofinvoicesgenerated',
+            'type'=>'left',
+            'titre'=>'New HistoryOfInvoicesGenerated',
+            'mainmenu'=>'invoicegenerator',
+            'leftmenu'=>'invoicegenerator_historyofinvoicesgenerated_new',
+            'url'=>'/invoicegenerator/historyofinvoicesgenerated_card.php?action=create',
+            'langs'=>'invoicegenerator@invoicegenerator',
+            'position'=>1000+$r,
+            'enabled'=>'$conf->invoicegenerator->enabled',
+            'perms'=>'1',
+            'target'=>'',
+            'user'=>2
+        );
+
+		/*END LEFTMENU HISTORYOFINVOICESGENERATED*/
 		/* END MODULEBUILDER LEFTMENU MYOBJECT */
 		// Exports profiles provided by this module
 		$r = 1;
