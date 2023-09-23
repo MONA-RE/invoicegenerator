@@ -363,7 +363,7 @@ class modInvoiceGenerator extends DolibarrModules
 			'url'=>'/invoicegenerator/invoicegeneratortemplate_list.php',
 			'langs'=>'invoicegenerator@invoicegenerator',
 			'position'=>1000+$r,
-			'enabled'=>'$conf->testmodule->enabled',
+			'enabled'=>'$conf->invoicegenerator->enabled',
 			'perms'=>'1',
 			'target'=>'',
 			'user'=>2,

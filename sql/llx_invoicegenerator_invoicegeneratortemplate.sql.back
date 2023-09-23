@@ -19,10 +19,6 @@ CREATE TABLE llx_invoicegenerator_invoicegeneratortemplate(
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
 	label varchar(255), 
-	amount double DEFAULT NULL, 
-	qty real, 
-	fk_soc integer, 
-	fk_project integer, 
 	description text, 
 	note_public text, 
 	note_private text, 
@@ -34,6 +30,7 @@ CREATE TABLE llx_invoicegenerator_invoicegeneratortemplate(
 	import_key varchar(14), 
 	model_pdf varchar(255), 
 	status integer NOT NULL, 
-	invoice_perdiodicity integer DEFAULT 10 NOT NULL
+	invoice_perdiodicity integer DEFAULT 10 NOT NULL, 
+	notify_customer_by_mail integer NOT NULL
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;
