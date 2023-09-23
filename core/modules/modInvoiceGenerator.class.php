@@ -100,7 +100,7 @@ class modInvoiceGenerator extends DolibarrModules
 			// Set this to 1 if module has its own barcode directory (core/modules/barcode)
 			'barcode' => 0,
 			// Set this to 1 if module has its own models directory (core/modules/xxx)
-			'models' => 0,
+			'models' => 1,
 			// Set this to 1 if module has its own printing directory (core/modules/printing)
 			'printing' => 0,
 			// Set this to 1 if module has its own theme directory (theme)
@@ -247,8 +247,8 @@ class modInvoiceGenerator extends DolibarrModules
 			//  0 => array(
 			//      'label' => 'MyJob label',
 			//      'jobtype' => 'method',
-			//      'class' => '/invoicegenerator/class/myobject.class.php',
-			//      'objectname' => 'MyObject',
+			//      'class' => '/invoicegenerator/class/invoicegeneratortemplate.class.php',
+			//      'objectname' => 'InvoiceGeneratorTemplate',
 			//      'method' => 'doScheduledJob',
 			//      'parameters' => '',
 			//      'comment' => 'Comment',
@@ -269,26 +269,22 @@ class modInvoiceGenerator extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
-		/*$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of InvoiceGenerator'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->hasRight('invoicegenerator', 'myobject', 'read'))
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (0 * 10) + 0 + 1);
+		$this->rights[$r][1] = 'Read InvoiceGeneratorTemplate object of InvoiceGenerator';
+		$this->rights[$r][4] = 'invoicegeneratortemplate';
+		$this->rights[$r][5] = 'read';
 		$r++;
-		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create/Update objects of InvoiceGenerator'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->hasRight('invoicegenerator', 'myobject', 'write'))
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (0 * 10) + 1 + 1);
+		$this->rights[$r][1] = 'Create/Update InvoiceGeneratorTemplate object of InvoiceGenerator';
+		$this->rights[$r][4] = 'invoicegeneratortemplate';
+		$this->rights[$r][5] = 'write';
 		$r++;
-		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of InvoiceGenerator'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->invoicegenerator->myobject->delete)
-		$r++;*/
-
-
-
-
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (0 * 10) + 2 + 1);
+		$this->rights[$r][1] = 'Delete InvoiceGeneratorTemplate object of InvoiceGenerator';
+		$this->rights[$r][4] = 'invoicegeneratortemplate';
+		$this->rights[$r][5] = 'delete';
+		$r++;
+		
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add
@@ -307,7 +303,7 @@ class modInvoiceGenerator extends DolibarrModules
 			'langs'=>'invoicegenerator@invoicegenerator', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000 + $r,
 			'enabled'=>'isModEnabled("invoicegenerator")', // Define condition to show or hide menu entry. Use 'isModEnabled("invoicegenerator")' if entry must be visible if module is enabled.
-			'perms'=>'1', // Use 'perms'=>'$user->hasRight("invoicegenerator", "myobject", "read")' if you want your menu with a permission rules
+			'perms'=>'1', // Use 'perms'=>'$user->hasRight("invoicegenerator", "invoicegeneratortemplate", "read")' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
 		);
@@ -316,46 +312,92 @@ class modInvoiceGenerator extends DolibarrModules
 		/*$this->menu[$r++]=array(
 			'fk_menu'=>'fk_mainmenu=invoicegenerator',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Left menu entry
-			'titre'=>'MyObject',
+			'titre'=>'InvoiceGeneratorTemplate',
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'invoicegenerator',
-			'leftmenu'=>'myobject',
+			'leftmenu'=>'invoicegeneratortemplate',
 			'url'=>'/invoicegenerator/invoicegeneratorindex.php',
 			'langs'=>'invoicegenerator@invoicegenerator',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'isModEnabled("invoicegenerator")', // Define condition to show or hide menu entry. Use 'isModEnabled("invoicegenerator")' if entry must be visible if module is enabled.
-			'perms'=>'$user->hasRight("invoicegenerator", "myobject", "read")',
+			'perms'=>'$user->hasRight("invoicegenerator", "invoicegeneratortemplate", "read")',
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=invoicegeneratortemplate',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'List_MyObject',
+			'titre'=>'List_InvoiceGeneratorTemplate',
 			'mainmenu'=>'invoicegenerator',
-			'leftmenu'=>'invoicegenerator_myobject_list',
-			'url'=>'/invoicegenerator/myobject_list.php',
+			'leftmenu'=>'invoicegenerator_invoicegeneratortemplate_list',
+			'url'=>'/invoicegenerator/invoicegeneratortemplate_list.php',
 			'langs'=>'invoicegenerator@invoicegenerator',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'isModEnabled("invoicegenerator")', // Define condition to show or hide menu entry. Use 'isModEnabled("invoicegenerator")' if entry must be visible if module is enabled.
-			'perms'=>'$user->hasRight("invoicegenerator", "myobject", "read")'
+			'perms'=>'$user->hasRight("invoicegenerator", "invoicegeneratortemplate", "read")'
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=invoicegeneratortemplate',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'New_MyObject',
+			'titre'=>'New_InvoiceGeneratorTemplate',
 			'mainmenu'=>'invoicegenerator',
-			'leftmenu'=>'invoicegenerator_myobject_new',
-			'url'=>'/invoicegenerator/myobject_card.php?action=create',
+			'leftmenu'=>'invoicegenerator_invoicegeneratortemplate_new',
+			'url'=>'/invoicegenerator/invoicegeneratortemplate_card.php?action=create',
 			'langs'=>'invoicegenerator@invoicegenerator',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'isModEnabled("invoicegenerator")', // Define condition to show or hide menu entry. Use 'isModEnabled("invoicegenerator")' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->hasRight("invoicegenerator", "myobject", "write")'
+			'perms'=>'$user->hasRight("invoicegenerator", "invoicegeneratortemplate", "write")'
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);*/
+		/*LEFTMENU INVOICEGENERATORTEMPLATE*/
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=invoicegenerator',
+			'type'=>'left',
+			'titre'=>'InvoiceGeneratorTemplate',
+			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+			'mainmenu'=>'invoicegenerator',
+			'leftmenu'=>'invoicegeneratortemplate',
+			'url'=>'/invoicegenerator/invoicegeneratortemplate_list.php',
+			'langs'=>'invoicegenerator@invoicegenerator',
+			'position'=>1000+$r,
+			'enabled'=>'$conf->testmodule->enabled',
+			'perms'=>'1',
+			'target'=>'',
+			'user'=>2,
+		);
+        $this->menu[$r++]=array(
+            'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=invoicegeneratortemplate',
+            'type'=>'left',
+            'titre'=>'List InvoiceGeneratorTemplate',
+            'mainmenu'=>'invoicegenerator',
+            'leftmenu'=>'invoicegenerator_invoicegeneratortemplate_list',
+            'url'=>'/invoicegenerator/invoicegeneratortemplate_list.php',
+            'langs'=>'invoicegenerator@invoicegenerator',
+            'position'=>1000+$r,
+            'enabled'=>'$conf->invoicegenerator->enabled',
+            'perms'=>'1',
+            'target'=>'',
+            'user'=>2,
+        );
+        $this->menu[$r++]=array(
+            'fk_menu'=>'fk_mainmenu=invoicegenerator,fk_leftmenu=invoicegeneratortemplate',
+            'type'=>'left',
+            'titre'=>'New InvoiceGeneratorTemplate',
+            'mainmenu'=>'invoicegenerator',
+            'leftmenu'=>'invoicegenerator_invoicegeneratortemplate_new',
+            'url'=>'/invoicegenerator/invoicegeneratortemplate_card.php?action=create',
+            'langs'=>'invoicegenerator@invoicegenerator',
+            'position'=>1000+$r,
+            'enabled'=>'$conf->invoicegenerator->enabled',
+            'perms'=>'1',
+            'target'=>'',
+            'user'=>2
+        );
+
+		/*END LEFTMENU INVOICEGENERATORTEMPLATE*/
 		/* END MODULEBUILDER LEFTMENU MYOBJECT */
 		// Exports profiles provided by this module
 		$r = 1;
@@ -363,28 +405,28 @@ class modInvoiceGenerator extends DolibarrModules
 		/*
 		$langs->load("invoicegenerator@invoicegenerator");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		$this->export_icon[$r]='myobject@invoicegenerator';
+		$this->export_label[$r]='InvoiceGeneratorTemplateLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_icon[$r]='invoicegeneratortemplate@invoicegenerator';
 		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
-		$keyforclass = 'MyObject'; $keyforclassfile='/invoicegenerator/class/myobject.class.php'; $keyforelement='myobject@invoicegenerator';
+		$keyforclass = 'InvoiceGeneratorTemplate'; $keyforclassfile='/invoicegenerator/class/invoicegeneratortemplate.class.php'; $keyforelement='invoicegeneratortemplate@invoicegenerator';
 		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
 		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
 		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
-		//$keyforclass = 'MyObjectLine'; $keyforclassfile='/invoicegenerator/class/myobject.class.php'; $keyforelement='myobjectline@invoicegenerator'; $keyforalias='tl';
+		//$keyforclass = 'InvoiceGeneratorTemplateLine'; $keyforclassfile='/invoicegenerator/class/invoicegeneratortemplate.class.php'; $keyforelement='invoicegeneratortemplateline@invoicegenerator'; $keyforalias='tl';
 		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@invoicegenerator';
+		$keyforselect='invoicegeneratortemplate'; $keyforaliasextra='extra'; $keyforelement='invoicegeneratortemplate@invoicegenerator';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='myobjectline'; $keyforaliasextra='extraline'; $keyforelement='myobjectline@invoicegenerator';
+		//$keyforselect='invoicegeneratortemplateline'; $keyforaliasextra='extraline'; $keyforelement='invoicegeneratortemplateline@invoicegenerator';
 		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$this->export_dependencies_array[$r] = array('myobjectline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
+		//$this->export_dependencies_array[$r] = array('invoicegeneratortemplateline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		//$this->export_special_array[$r] = array('t.field'=>'...');
 		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
 		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'myobject_line as tl ON tl.fk_myobject = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'invoicegeneratortemplate as t';
+		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'invoicegeneratortemplate_line as tl ON tl.fk_invoicegeneratortemplate = t.rowid';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
+		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('invoicegeneratortemplate').')';
 		$r++; */
 		/* END MODULEBUILDER EXPORT MYOBJECT */
 
@@ -394,27 +436,27 @@ class modInvoiceGenerator extends DolibarrModules
 		/*
 		$langs->load("invoicegenerator@invoicegenerator");
 		$this->import_code[$r]=$this->rights_class.'_'.$r;
-		$this->import_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		$this->import_icon[$r]='myobject@invoicegenerator';
-		$this->import_tables_array[$r] = array('t' => MAIN_DB_PREFIX.'invoicegenerator_myobject', 'extra' => MAIN_DB_PREFIX.'invoicegenerator_myobject_extrafields');
+		$this->import_label[$r]='InvoiceGeneratorTemplateLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->import_icon[$r]='invoicegeneratortemplate@invoicegenerator';
+		$this->import_tables_array[$r] = array('t' => MAIN_DB_PREFIX.'invoicegenerator_invoicegeneratortemplate', 'extra' => MAIN_DB_PREFIX.'invoicegenerator_invoicegeneratortemplate_extrafields');
 		$this->import_tables_creator_array[$r] = array('t' => 'fk_user_author'); // Fields to store import user id
 		$import_sample = array();
-		$keyforclass = 'MyObject'; $keyforclassfile='/invoicegenerator/class/myobject.class.php'; $keyforelement='myobject@invoicegenerator';
+		$keyforclass = 'InvoiceGeneratorTemplate'; $keyforclassfile='/invoicegenerator/class/invoicegeneratortemplate.class.php'; $keyforelement='invoicegeneratortemplate@invoicegenerator';
 		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinimport.inc.php';
 		$import_extrafield_sample = array();
-		$keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@invoicegenerator';
+		$keyforselect='invoicegeneratortemplate'; $keyforaliasextra='extra'; $keyforelement='invoicegeneratortemplate@invoicegenerator';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinimport.inc.php';
-		$this->import_fieldshidden_array[$r] = array('extra.fk_object' => 'lastrowid-'.MAIN_DB_PREFIX.'invoicegenerator_myobject');
+		$this->import_fieldshidden_array[$r] = array('extra.fk_object' => 'lastrowid-'.MAIN_DB_PREFIX.'invoicegenerator_invoicegeneratortemplate');
 		$this->import_regex_array[$r] = array();
 		$this->import_examplevalues_array[$r] = array_merge($import_sample, $import_extrafield_sample);
 		$this->import_updatekeys_array[$r] = array('t.ref' => 'Ref');
 		$this->import_convertvalue_array[$r] = array(
 			't.ref' => array(
 				'rule'=>'getrefifauto',
-				'class'=>(!getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON') ? 'mod_myobject_standard' : getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON')),
-				'path'=>"/core/modules/commande/".(!getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON') ? 'mod_myobject_standard' : getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON')).'.php'
-				'classobject'=>'MyObject',
-				'pathobject'=>'/invoicegenerator/class/myobject.class.php',
+				'class'=>(!getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON') ? 'mod_invoicegeneratortemplate_standard' : getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON')),
+				'path'=>"/core/modules/commande/".(!getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON') ? 'mod_invoicegeneratortemplate_standard' : getDolGlobalString('INVOICEGENERATOR_MYOBJECT_ADDON')).'.php'
+				'classobject'=>'InvoiceGeneratorTemplate',
+				'pathobject'=>'/invoicegenerator/class/invoicegeneratortemplate.class.php',
 			),
 			't.fk_soc' => array('rule' => 'fetchidfromref', 'file' => '/societe/class/societe.class.php', 'class' => 'Societe', 'method' => 'fetch', 'element' => 'ThirdParty'),
 			't.fk_user_valid' => array('rule' => 'fetchidfromref', 'file' => '/user/class/user.class.php', 'class' => 'User', 'method' => 'fetch', 'element' => 'user'),
@@ -460,16 +502,16 @@ class modInvoiceGenerator extends DolibarrModules
 		// Document templates
 		$moduledir = dol_sanitizeFileName('invoicegenerator');
 		$myTmpObjects = array();
-		$myTmpObjects['MyObject'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+		$myTmpObjects['InvoiceGeneratorTemplate'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
 
 		foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
-			if ($myTmpObjectKey == 'MyObject') {
+			if ($myTmpObjectKey == 'InvoiceGeneratorTemplate') {
 				continue;
 			}
 			if ($myTmpObjectArray['includerefgeneration']) {
-				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/'.$moduledir.'/template_myobjects.odt';
+				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/'.$moduledir.'/template_invoicegeneratortemplates.odt';
 				$dirodt = DOL_DATA_ROOT.'/doctemplates/'.$moduledir;
-				$dest = $dirodt.'/template_myobjects.odt';
+				$dest = $dirodt.'/template_invoicegeneratortemplates.odt';
 
 				if (file_exists($src) && !file_exists($dest)) {
 					require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
