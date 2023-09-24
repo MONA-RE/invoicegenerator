@@ -8,5 +8,5 @@ for( $i = 0; $i < 10; $i++ ) {
     
     $number = $numbers[ $i ];
 
-    echo $number . "\n";
+    echo $number . "<br><br><br>";
 }
