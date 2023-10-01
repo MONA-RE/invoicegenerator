@@ -4,7 +4,7 @@
 
 Ce module (en cours de développement) à pour objectif la génération automatique de facture pour chaque client en fonction de la périodicité definit dans la fiche client.
 Un object 'template de facturation' permet de gérer les différentes options.
-le champ dans la fiche client fait référence à un objet 'InvoiceGeneratorTemplate'.
+le champ dans la fiche client fait référence à cet objet 'InvoiceGeneratorTemplate'.
 Une tâche planifiée génère automatiquement les factures à partir des commandes livrées.
 Un récap par mail est transmis à l'émail du déstinataire définit dans le module.
 Un évènement est inscrit dans l'agenda de chaque facture pour lancer un rappel en fonction de la date d'échéance de la facture.
