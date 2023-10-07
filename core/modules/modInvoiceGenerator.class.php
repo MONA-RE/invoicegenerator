@@ -271,8 +271,8 @@ class modInvoiceGenerator extends DolibarrModules
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf('%02d', (0 * 10) + 0 + 1);
 		$this->rights[$r][1] = 'Read InvoiceGeneratorTemplate object of InvoiceGenerator';
-		$this->rights[$r][2] = 'r';  // r=read, w=write, d=delete, v=validate, p=send, i=import, e=export, l=list, c=create, a=approve, s=show, m=modify, x=delete
-		$this->rights[$r][3] = '1'; // 0=module, 1=external user, 2=both
+		$this->rights[$r][2] = 'r';  // r=read, w=write
+		$this->rights[$r][3] = '1'; // 0= non activé, 1= activé par defaut
 		$this->rights[$r][4] = 'invoicegeneratortemplate';
 		$this->rights[$r][5] = 'read';
 		$r++;
