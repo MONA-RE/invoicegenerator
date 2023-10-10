@@ -202,7 +202,8 @@ class modInvoiceGenerator extends DolibarrModules
 		// 'thirdparty'       to add a tab in third party view
 		// 'user'             to add a tab in user view
 
-		$this->tabs[] = array('data'=>'thirdparty:+tabnameTed1:TitleTed1:fr_FR@invoicegenerator:$user->rights->invoicegenerator->read:/invoicegenerator/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
+		$this->tabs[] = array('data'=>'thirdparty:+invoicegenerator:TitleTed1:invoicegenerator@invoicegenerator:1:/invoicegenerator/mynewtabTed1.php?id=__ID__');  					// To add a new tab identified by code tabname1
+		
 		// Dictionaries
 		$this->dictionaries = array();
 		/* Example:
