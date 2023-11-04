@@ -129,7 +129,12 @@ class InterfaceInvoiceGeneratorTriggers extends DolibarrTriggers
 			//case 'USERGROUP_DELETE':
 
 			// Companies
-			//case 'COMPANY_CREATE':
+			case 'COMPANY_CREATE':
+				echo 'test trigger comagny create';
+				exit;
+
+
+				break;
 			//case 'COMPANY_MODIFY':
 			//case 'COMPANY_DELETE':
 
