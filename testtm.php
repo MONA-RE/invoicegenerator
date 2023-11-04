@@ -20,20 +20,42 @@ $user->fetch(1); // Admin user
 # affichage du nom de l'utilisateur
 echo $user->lastname;
 
-
-/*
+$nombrealeatoire = random_int(1, 1000000);
 
 #creation d'un objet projet
 $object = new Project($db);
 
+$object->ref = 'TESTTM'.$nombrealeatoire;
+$object->title = 'TESTTM title'.$nombrealeatoire;    
+$object->socid = 1;
+$object->description = 'TESTTM description';
+$object->public          = GETPOST('public', 'alphanohtml');
+$object->opp_amount      = 0;
+$object->budget_amount   = 0;
+$object->date_c = dol_now();
+$object->date_start      = dol_now();
+$object->date_end        = dol_now();
+$object->date_start_event = dol_now();
+$object->date_end_event   = dol_now();
+$object->location        = '';
+$object->statut = Project::STATUS_VALIDATED;
+$object->opp_status      = 0;
+$object->opp_percent     = 0;
+$object->usage_opportunity    = 0;
+$object->usage_task           = 0;
+$object->usage_bill_time      = 0;
+$object->usage_organize_event = 0;
 
-		// Create with status validated immediatly
-		if (!empty($conf->global->PROJECT_CREATE_NO_DRAFT) && !$error) {
-			$status = Project::STATUS_VALIDATED;
-		}
+$result = $object->create($user);
+
+
+echo $object->id . ' ' . $object->ref . ' ' . $object->title . ' ' . $object->socid . ' ' . $object->description ;
 
 
 
+
+
+/*
 # redirection vers la page du projet créé
         if (!$error) {
             $db->commit();
