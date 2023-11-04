@@ -1126,6 +1126,8 @@ class InvoiceGeneratorTemplate extends CommonObject
 		$this->db->begin();
 
 		// ...
+		// ecrit dans les log de dolibarr l'heure actuelle du serveur
+		dol_syslog("doScheduledJob ".$now, LOG_DEBUG);
 
 		$this->db->commit();
 

@@ -80,7 +80,7 @@ dol_include_once('/invoicegenerator/class/invoicegeneratortemplate.class.php');
 dol_include_once('/invoicegenerator/lib/invoicegenerator_invoicegeneratortemplate.lib.php');
 
 // Load translation files required by the page
-$langs->loadLangs(array("invoicegenerator@invoicegenerator", "other"));
+$langs->loadLangs(array("invoicegenerator@invoicegenerator"));
 
 // Get parameters
 $id = GETPOST('id', 'int');

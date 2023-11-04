@@ -246,6 +246,21 @@ class modInvoiceGenerator extends DolibarrModules
 		// Cronjobs (List of cron jobs entries to add when module is enabled)
 		// unit_frequency must be 60 for minute, 3600 for hour, 86400 for day, 604800 for week
 		$this->cronjobs = array(
+			 0 => array(
+			     'label' => $langs->trans("CronJobInvoiceGeneratorTemplateLabel"),
+			     'jobtype' => 'method',
+			     'class' => '/invoicegenerator/class/invoicegeneratortemplate.class.php',
+			     'objectname' => 'InvoiceGeneratorTemplate',
+			     'method' => 'doScheduledJob',
+			     'parameters' => '',
+			     'comment' => 'lancement des tâches planifiées de génération de factures en fonction des modèles',
+			     'frequency' => 2,
+			     'unitfrequency' => 3600,
+			     'status' => 0,
+			     'test' => 'isModEnabled("invoicegenerator")',
+			     'priority' => 50,
+			 )
+
 			//  0 => array(
 			//      'label' => 'MyJob label',
 			//      'jobtype' => 'method',
