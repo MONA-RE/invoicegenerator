@@ -381,7 +381,7 @@ class ActionsInvoiceGenerator
 		//$disabled = 1;
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('thirdpartycard', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
+		if (in_array($parameters['currentcontext'], array('thirdpartycard', 'thirdpartycomm'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
 			echo "test teddy";
 		}
 
