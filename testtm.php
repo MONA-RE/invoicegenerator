@@ -16,40 +16,49 @@ require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
 
 $user = new User($db);
 $user->fetch(1); // Admin user
-
 # affichage du nom de l'utilisateur
-echo $user->lastname;
+echo $user->lastname .'<br>';
+
+#chargement de l'objet tiers
+$object = new Societe($db);
+$object->fetch(8);  //chargement du tiers
+
+echo $object->name .'<br>';
+
+
+
 
 $nombrealeatoire = random_int(1, 1000000);
 
 #creation d'un objet projet
-$object = new Project($db);
+		# pour chaque nouveau tiers création d'un projet
+		# création d'un objet projet
+		$projet = new Project($db);
+		$projet->ref = $nombrealeatoire;
+		$projet->title = 'Projet nouveau tiers :'.$object->name;   
+		$projet->socid = $object->id;
+		$projet->description = 'Description nouveau tiers :'.$object->name;
+		$projet->public          = 0;
+		$projet->opp_amount      = 0;
+		$projet->budget_amount   = 0;
+		$projet->date_c = dol_now();
+		$projet->date_start      = dol_now();
+		$projet->date_end        = dol_now();
+		$projet->date_start_event = dol_now();
+		$projet->date_end_event   = dol_now();
+		$projet->location        = '';
+		$projet->statut = Project::STATUS_VALIDATED;
+		$projet->opp_status      = 0;
+		$projet->opp_percent     = 0;
+		$projet->usage_opportunity    = 0;
+		$projet->usage_task           = 0;
+		$projet->usage_bill_time      = 0;
+		$projet->usage_organize_event = 0;	
 
-$object->ref = 'TESTTM'.$nombrealeatoire;
-$object->title = 'TESTTM title'.$nombrealeatoire;    
-$object->socid = 1;
-$object->description = 'TESTTM description';
-$object->public          = GETPOST('public', 'alphanohtml');
-$object->opp_amount      = 0;
-$object->budget_amount   = 0;
-$object->date_c = dol_now();
-$object->date_start      = dol_now();
-$object->date_end        = dol_now();
-$object->date_start_event = dol_now();
-$object->date_end_event   = dol_now();
-$object->location        = '';
-$object->statut = Project::STATUS_VALIDATED;
-$object->opp_status      = 0;
-$object->opp_percent     = 0;
-$object->usage_opportunity    = 0;
-$object->usage_task           = 0;
-$object->usage_bill_time      = 0;
-$object->usage_organize_event = 0;
-
-$result = $object->create($user);
+$result = $projet->create($user);
 
 
-echo $object->id . ' ' . $object->ref . ' ' . $object->title . ' ' . $object->socid . ' ' . $object->description ;
+echo $projet->id . ' ' . $projet->ref . ' ' . $projet->title . ' ' . $projet->socid . ' ' . $projet->description ;
 
 
 

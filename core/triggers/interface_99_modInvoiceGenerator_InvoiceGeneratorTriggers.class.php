@@ -129,12 +129,50 @@ class InterfaceInvoiceGeneratorTriggers extends DolibarrTriggers
 			//case 'USERGROUP_DELETE':
 
 			// Companies
+
+			/* utilisation de la fonction companyCreate
+
 			case 'COMPANY_CREATE':
 				echo 'test trigger comagny create';
-				exit;
+				require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
+
+
+
+				$nombrealeatoire = random_int(1, 1000000);
+
+				#creation d'un objet projet
+						# pour chaque nouveau tiers création d'un projet
+						# création d'un objet projet
+						$projet = new Project($this->db);
+						$projet->ref = $nombrealeatoire;
+						$projet->title = 'Projet nouveau tiers :'.$object->name;   
+						$projet->socid = $object->id;
+						$projet->description = 'Description nouveau tiers :'.$object->name;
+						$projet->public          = 0;
+						$projet->opp_amount      = 0;
+						$projet->budget_amount   = 0;
+						$projet->date_c = dol_now();
+						$projet->date_start      = dol_now();
+						$projet->date_end        = dol_now();
+						$projet->date_start_event = dol_now();
+						$projet->date_end_event   = dol_now();
+						$projet->location        = '';
+						$projet->statut = Project::STATUS_VALIDATED;
+						$projet->opp_status      = 0;
+						$projet->opp_percent     = 0;
+						$projet->usage_opportunity    = 0;
+						$projet->usage_task           = 0;
+						$projet->usage_bill_time      = 0;
+						$projet->usage_organize_event = 0;	
+
+				$result = $projet->create($user);
 
 
 				break;
+
+			*/
+
+
 			//case 'COMPANY_MODIFY':
 			//case 'COMPANY_DELETE':
 
@@ -325,4 +363,43 @@ class InterfaceInvoiceGeneratorTriggers extends DolibarrTriggers
 
 		return 0;
 	}
+
+
+	
+	public function companyCreate($action, $object, User $user, Translate $langs, Conf $conf)
+	{
+		require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
+
+		$nombrealeatoire = random_int(1, 1000000);
+
+		#creation d'un objet projet
+				# pour chaque nouveau tiers création d'un projet
+				# création d'un objet projet
+				$projet = new Project($this->db);
+				$projet->ref = $nombrealeatoire;
+				$projet->title = 'Projet nouveau tiers :'.$object->name;   
+				$projet->socid = $object->id;
+				$projet->description = 'Description nouveau tiers :'.$object->name;
+				$projet->public          = 0;
+				$projet->opp_amount      = 0;
+				$projet->budget_amount   = 0;
+				$projet->date_c = dol_now();
+				$projet->date_start      = dol_now();
+				$projet->date_end        = dol_now();
+				$projet->date_start_event = dol_now();
+				$projet->date_end_event   = dol_now();
+				$projet->location        = '';
+				$projet->statut = Project::STATUS_VALIDATED;
+				$projet->opp_status      = 0;
+				$projet->opp_percent     = 0;
+				$projet->usage_opportunity    = 0;
+				$projet->usage_task           = 0;
+				$projet->usage_bill_time      = 0;
+				$projet->usage_organize_event = 0;	
+		
+		$result = $projet->create($user);
+	}
+	
+	
+
 }
