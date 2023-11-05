@@ -8,7 +8,8 @@ require '../../main.inc.php';
 
 
 require_once DOL_DOCUMENT_ROOT.'/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
+
+include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 
 
 
@@ -31,6 +32,36 @@ echo $object->name .'<br>';
 $nombrealeatoire = random_int(1, 1000000);
 
 #test envoie mail
+
+
+// formulaire de main : 
+    // devdol18_1/htdocs/core/actions_sendmails.inc.php
+
+    	// Create form object
+			include_once DOL_DOCUMENT_ROOT.'/core/class/html.formmail.class.php';
+			$formmail = new FormMail($db);
+			$formmail->trackid = $trackid; // $trackid must be defined
+
+			$attachedfiles = $formmail->get_attached_files();
+			$filepath = $attachedfiles['paths'];
+			$filename = $attachedfiles['names'];
+			$mimetype = $attachedfiles['mimes'];
+
+
+
+// fonction d'envoie de mail : 
+	// Send mail (substitutionarray must be done just before this)
+    if (empty($sendcontext)) {
+        $sendcontext = 'standard';
+    }
+    $mailfile = new CMailFile($subject, $sendto, $from, $message, $filepath, $mimetype, $filename, $sendtocc, $sendtobcc, $deliveryreceipt, -1, '', '', $trackid, '', $sendcontext, '', $upload_dir_tmp);
+
+    if (!empty($mailfile->error) || !empty($mailfile->errors)) {
+        setEventMessages($mailfile->error, $mailfile->errors, 'errors');
+        $action = 'presend';
+    } else {
+        $result = $mailfile->sendfile();
+
 
 
 ?>
