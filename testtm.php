@@ -24,6 +24,7 @@ $object = new Societe($db);
 $object->fetch(8);  //chargement du tiers
 
 echo $object->name .'<br>';
+$nombrealeatoire = random_int(1, 1000000);
 
 
 
@@ -80,5 +81,4 @@ echo $projet->id . ' ' . $projet->ref . ' ' . $projet->title . ' ' . $projet->so
             }
         }
 */        
-
 ?>
