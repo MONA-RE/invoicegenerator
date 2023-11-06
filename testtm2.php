@@ -11,6 +11,8 @@ require_once DOL_DOCUMENT_ROOT.'/user/class/user.class.php';
 
 include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 
+include DOL_DOCUMENT_ROOT.'core/class/CMailFile.class.php';
+
 
 
 #gestion de l'utilisateur de création d'un projet
@@ -34,20 +36,24 @@ $nombrealeatoire = random_int(1, 1000000);
 #test envoie mail
 
 
+$subject = 'Test envoie mail';
+$sendto = 'teddy.morel@gmail.com';
+$from = 'contact@mona.re';
+$message = 'Test envoie mail depuis testtm2.php';
+
+
 
 // fonction d'envoie de mail : 
-	// Send mail (substitutionarray must be done just before this)
-    if (empty($sendcontext)) {
-        $sendcontext = 'standard';
-    }
-    $mailfile = new CMailFile($subject, $sendto, $from, $message, $filepath, $mimetype, $filename, $sendtocc, $sendtobcc, $deliveryreceipt, -1, '', '', $trackid, '', $sendcontext, '', $upload_dir_tmp);
+
+    $mailfile = new CMailFile($subject, $sendto, $from, $message);
 
     if (!empty($mailfile->error) || !empty($mailfile->errors)) {
-        setEventMessages($mailfile->error, $mailfile->errors, 'errors');
-        $action = 'presend';
+        echo $mailfile->error;
+       
     } else {
         $result = $mailfile->sendfile();
+    }
+        
+    
 
-
-
-?>
+        ?>
