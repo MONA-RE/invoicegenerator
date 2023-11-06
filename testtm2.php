@@ -34,20 +34,6 @@ $nombrealeatoire = random_int(1, 1000000);
 #test envoie mail
 
 
-// formulaire de main : 
-    // devdol18_1/htdocs/core/actions_sendmails.inc.php
-
-    	// Create form object
-			include_once DOL_DOCUMENT_ROOT.'/core/class/html.formmail.class.php';
-			$formmail = new FormMail($db);
-			$formmail->trackid = $trackid; // $trackid must be defined
-
-			$attachedfiles = $formmail->get_attached_files();
-			$filepath = $attachedfiles['paths'];
-			$filename = $attachedfiles['names'];
-			$mimetype = $attachedfiles['mimes'];
-
-
 
 // fonction d'envoie de mail : 
 	// Send mail (substitutionarray must be done just before this)

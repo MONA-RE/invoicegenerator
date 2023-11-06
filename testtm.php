@@ -62,13 +62,16 @@ $result = $projet->create($user);
 echo $projet->id . ' ' . $projet->ref . ' ' . $projet->title . ' ' . $projet->socid . ' ' . $projet->description ;
 
 
+header("Location:".DOL_URL_ROOT."/projet/card.php?id=".$projet->id);
+exit;
+
 
 
 
 /*
 # redirection vers la page du projet créé
         if (!$error) {
-            $db->commit();
+//            $db->commit();
 
             if (!empty($backtopage)) {
                 $backtopage = preg_replace('/--IDFORBACKTOPAGE--|__ID__/', $object->id, $backtopage); // New method to autoselect project after a New on another form object creation
@@ -80,5 +83,5 @@ echo $projet->id . ' ' . $projet->ref . ' ' . $projet->title . ' ' . $projet->so
                 exit;
             }
         }
-*/        
+        */
 ?>

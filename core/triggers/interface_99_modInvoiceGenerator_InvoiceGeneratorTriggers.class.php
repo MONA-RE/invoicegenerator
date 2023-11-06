@@ -398,6 +398,12 @@ class InterfaceInvoiceGeneratorTriggers extends DolibarrTriggers
 				$projet->usage_organize_event = 0;	
 		
 		$result = $projet->create($user);
+		
+		//$this->db->commit();
+
+		//redirection vers la page du projet créé
+		header("Location:".DOL_URL_ROOT."/projet/card.php?id=".$projet->id);
+		//exit;
 	}
 	
 	
